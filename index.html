@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Quote and Image</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Random Quote and Image</h1>
+    <div id="quote-container">
+        <p id="random-quote"></p>
+    </div>
+    <div id="image-container">
+        <img id="image" src="" alt="Random Image">
+    </div>
+    <button id="new-quote-button">New Quote</button>
+
+    <script>
+        // Función para obtener una frase aleatoria
+        function getRandomQuote() {
+            $.get('/randomquote', function(data) {
+            $('#random-quote').text(data.quote);
+        });
+    }
+
+        // Function to get a random image from the API
+        function getRandomImage() {
+            $.get('/randomimage', function(data) {
+                // Update the image element with the random image
+                $('#image').attr('src', '../images/' + data.name);
+            });
+        }
+
+        // Cargar una frase aleatoria al cargar la página
+        getRandomQuote();
+        
+        // Function to handle the click event of the "New Quote" button
+        $('#new-quote-button').click(function() {
+            getRandomQuote();
+            getRandomImage();
+        });
+
+        // Initial load of a random quote and image
+        getRandomQuote();
+        getRandomImage();
+    </script>
+</body>
+</html>

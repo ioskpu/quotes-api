@@ -21,8 +21,9 @@ export default async function handler (req, res) {
 	const retRandom = await Db.randomQuote(language);
 
 	if ( retRandom.error === null ) {
-	   res.status(200).json(retRandom.data[0]);		
-	} else {
-           res.status(401).json(retRandom.error);
-	}
+	   const randomQuote = retRandom.data[0].quote;
+	   res.status(200).json({ quote: randomQuote });
+   } else {
+	   res.status(401).json(retRandom.error);
+   }
 };
