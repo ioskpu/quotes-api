@@ -3,6 +3,7 @@
 <head>
     <title>Random Quote and Image</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./api/randomquote.js"></script>
 </head>
 <body>
     <h1>Random Quote and Image</h1>
@@ -16,8 +17,9 @@
 
     <script>
         // Función para obtener una frase aleatoria
-        function getRandomQuote() {
-            $.get('/randomquote', function(data) {
+        function getRandomQuote(language) {
+            var url = 'https://quotes-api-pi.vercel.app/api/randomquote?language=' + language;
+        $.get(url, function(data) {
             $('#random-quote').text(data.quote);
         });
     }
@@ -31,8 +33,8 @@
         }
 
         // Cargar una frase aleatoria al cargar la página
-        getRandomQuote();
-        
+        getRandomQuote(en);
+
         // Function to handle the click event of the "New Quote" button
         $('#new-quote-button').click(function() {
             getRandomQuote();
