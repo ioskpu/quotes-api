@@ -1,50 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random Quote</title>
-    <style>
-        /* Agrega tus estilos CSS aquí */
-    </style>
+    <title>Random Image and Quote</title>
 </head>
 <body>
     <div id="container">
-        <!-- El contenido generado por la API se insertará aquí -->
+        <!-- La imagen y la frase generadas se insertarán aquí -->
     </div>
-    <button onclick="generateNewQuote()">Generar nueva frase</button>
+    <button onclick="generateRandomImageAndQuote()">Generar nueva imagen y frase</button>
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        function generateNewQuote() {
-            const language = 'en'; // Idioma deseado
+        function generateRandomImageAndQuote() {
+            // Obtener imagen aleatoria de Unsplash
+            axios.get('https://api.unsplash.com/photos/random', {
+                params: {
+                    client_id: 'XOVivt6Wv--V9C8M83Y-6CjLSjnoLjsg1cRt2zB8HLk', // Reemplaza con tu Access Key de Unsplash
+                    query: 'random'
+                }
+            })
+            .then(imageResponse => {
+                const container = document.getElementById('container');
+                container.innerHTML = '';
 
-            fetch(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
-                .then(response => response.json())
-                .then(data => {
-                    const container = document.getElementById('container');
-                    container.innerHTML = '';
+                const imageElement = document.createElement('img');
+                imageElement.src = imageResponse.data.urls.regular;
+                imageElement.alt = 'Random Image';
+                container.appendChild(imageElement);
 
-                    const imgElement = document.createElement('img');
-                    imgElement.src = data.image;
-                    imgElement.style.width = '100%';
-                    imgElement.style.opacity = data.opacity;
-
-                    container.appendChild(imgElement);
-
-                    const quoteElement = document.createElement('p');
-                    quoteElement.innerHTML = `"${data.quote}"<br><br>${data.author}`;
-
-                    quoteElement.style.fontSize = data.fontSize;
-                    quoteElement.style.fontWeight = 'bold';
-                    quoteElement.style.fontStyle = 'italic';
-
-                    container.appendChild(quoteElement);
-                })
-                .catch(error => {
-                    console.log('Error:', error);
-                });
+                // Obtener frase aleatoria de tu API personalizada
+                axios.get('https://quotes-api-pi.vercel.app/api/randomimage?language=en')
+                    .then(quoteResponse => {
+                        const quoteElement = document.createElement('p');
+                        quoteElement.innerHTML = `"${quoteResponse.data.quote}"<br><br>${quoteResponse.data.author}`;
+                        container.appendChild(quoteElement);
+                    })
+                    .catch(error => {
+                        console.log('Error obteniendo frase:', error);
+                    });
+            })
+            .catch(error => {
+                console.log('Error obteniendo imagen:', error);
+            });
         }
-
-        // Generar la primera frase al cargar la página
-        generateNewQuote();
     </script>
 </body>
 </html>
