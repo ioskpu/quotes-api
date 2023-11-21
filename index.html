@@ -33,16 +33,16 @@
         }
 
         // Cargar una frase aleatoria al cargar la página
-        getRandomQuote();
+        getRandomQuote('es');
 
         // Function to handle the click event of the "New Quote" button
         $('#new-quote-button').click(function() {
-            getRandomQuote(en);
+            getRandomQuote();
             getRandomImage();
         });
 
         // Initial load of a random quote and image
-        getRandomQuote(en);
+        getRandomQuote();
         getRandomImage();
     </script>
 </body>
