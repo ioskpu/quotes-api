@@ -34,14 +34,16 @@
             .fail(function(jqXHR, textStatus, errorThrown) {
             console.log('Error fetching random image:', errorThrown);
         });
+    }
 
         // Cargar una frase aleatoria al cargar la página
         getRandomQuote('es');
 
         // Function to handle the click event of the "New Quote" button
         $('#new-quote-button').click(function() {
-            getRandomQuote('es');
-            getRandomImage();
+            var language = 'es'; // Reemplaza 'es' con el valor del idioma que desees
+        getRandomQuote(language);
+        getRandomImage();
         });
 
         // Initial load of a random quote and image
