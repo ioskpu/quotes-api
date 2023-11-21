@@ -18,18 +18,19 @@
     <script>
         // Función para obtener una frase aleatoria
         function getRandomQuote(language) {
-            var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
+            var url = 'https://quotes-api-pi.vercel.app/api/randomquote?language=' + language;
             $.get(url, function(data) {
                 $('#random-quote').text(data.quote);
             });
         }
 
-        // Function to get a random image from the API
-        function getRandomImage() {
-            $.get('/randomimage')
+        // Function to get a random image with quote from the API
+        function getRandomImage(language) {
+            var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
+            $.get(url)
                 .done(function(data) {
                     // Update the image element with the random image
-                    $('#image').attr('src', '../images/' + data.name);
+                    $('#image').attr('src', data.image);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     console.log('Error fetching random image:', errorThrown);
@@ -43,7 +44,7 @@
         $('#new-quote-button').click(function() {
             var language = 'es'; // Reemplaza 'es' con el valor del idioma que desees
             getRandomQuote(language);
-            getRandomImage();
+            getRandomImage(language);
         });
 
         // Initial load of a random quote and image
