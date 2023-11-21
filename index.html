@@ -2,10 +2,26 @@
 <html>
 <head>
     <title>Random Image and Quote</title>
+    <style>
+        #container {
+            text-align: center;
+        }
+
+        #image {
+            max-width: 500px; /* Ajusta el ancho máximo de la imagen según tus necesidades */
+        }
+
+        #quote {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div id="container">
         <!-- La imagen y la frase generadas se insertarán aquí -->
+        <img id="image" src="" alt="Random Image">
+        <p id="quote"></p>
     </div>
     <button onclick="generateRandomImageAndQuote()">Generar nueva imagen y frase</button>
 
