@@ -1,42 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Frases Aleatorias</title>
+    <title>Mi API</title>
     <style>
         /* Agrega tus estilos CSS aquí */
     </style>
 </head>
 <body>
-    <h1>Frases Aleatorias</h1>
-    <div id="quote-container">
-        <img id="quote-image" src="" alt="Imagen Aleatoria">
-        <p id="quote-text"></p>
-    </div>
-    <button id="new-quote-btn">Nueva Frase</button>
-
-    <script>
-        const quoteImage = document.getElementById('quote-image');
-        const quoteText = document.getElementById('quote-text');
-        const newQuoteButton = document.getElementById('new-quote-btn');
-
-        // Función para obtener una nueva frase aleatoria
-        function getNewQuote() {
-            fetch('https://quotes-api-pi.vercel.app/api/randomimage?language=es')
-                .then(response => response.json())
-                .then(data => {
-                    quoteImage.src = data.image;
-                    quoteText.textContent = data.text;
-                })
-                .catch(error => {
-                    console.error('Error al obtener la frase:', error);
-                });
-        }
-
-        // Llama a la función para mostrar una frase al cargar la página
-        getNewQuote();
-
-        // Agrega un event listener al botón para obtener una nueva frase al hacer clic
-        newQuoteButton.addEventListener('click', getNewQuote);
-    </script>
+    <h1>Mi API</h1>
+    <p>Bienvenido a mi API</p>
 </body>
 </html>
