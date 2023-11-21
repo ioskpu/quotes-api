@@ -1,62 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random Quote</title>
+    <title>Frases Aleatorias</title>
     <style>
-        /* Estilos CSS para la imagen y la frase */
-        .quote-container {
-            text-align: center;
-        }
-        .quote-image {
-            width: 100%;
-            opacity: 0.4;
-        }
-        .quote-text {
-            font-size: 40px;
-            font-weight: bold;
-            font-style: italic;
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+        /* Agrega tus estilos CSS aquí */
     </style>
 </head>
 <body>
-    <div class="quote-container">
-        <img id="quote-image" class="quote-image" src="" alt="Random Image">
-        <p id="quote-text" class="quote-text"></p>
-        <button id="generate-button">Generate New Quote</button>
+    <h1>Frases Aleatorias</h1>
+    <div id="quote-container">
+        <img id="quote-image" src="" alt="Imagen Aleatoria">
+        <p id="quote-text"></p>
     </div>
+    <button id="new-quote-btn">Nueva Frase</button>
 
     <script>
-        // Obtener referencia a los elementos HTML
-        const quoteImageElement = document.getElementById('quote-image');
-        const quoteTextElement = document.getElementById('quote-text');
-        const generateButton = document.getElementById('generate-button');
+        const quoteImage = document.getElementById('quote-image');
+        const quoteText = document.getElementById('quote-text');
+        const newQuoteButton = document.getElementById('new-quote-btn');
 
-        // Función para generar una nueva frase
-        function generateNewQuote() {
-            const language = 'es'; // Idioma deseado
-
-            // Realizar solicitud HTTP GET a la API
-            fetch(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
+        // Función para obtener una nueva frase aleatoria
+        function getNewQuote() {
+            fetch('https://quotes-api-pi.vercel.app/api/randomimage?language=es')
                 .then(response => response.json())
                 .then(data => {
-                    // Actualizar la imagen y la frase en el HTML
-                    quoteImageElement.src = data.image;
-                    quoteTextElement.textContent = `"${data.quote}" - ${data.author}`;
+                    quoteImage.src = data.image;
+                    quoteText.textContent = data.text;
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error al obtener la frase:', error);
                 });
         }
 
-        // Agregar evento de clic al botón
-        generateButton.addEventListener('click', generateNewQuote);
+        // Llama a la función para mostrar una frase al cargar la página
+        getNewQuote();
 
-        // Generar la primera frase al cargar la página
-        generateNewQuote();
+        // Agrega un event listener al botón para obtener una nueva frase al hacer clic
+        newQuoteButton.addEventListener('click', getNewQuote);
     </script>
 </body>
 </html>
