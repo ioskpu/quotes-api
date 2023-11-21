@@ -14,26 +14,29 @@
 
     <script>
         function generateNewQuote() {
-            fetch('https://quotes-api-pi.vercel.app/api/randomimage?language=en')
-                .then(response => response.json())
+            const language = 'en'; // Idioma deseado
+
+            fetch(`https://random.imagecdn.app/500/150`)
+                .then(response => response.text())
                 .then(data => {
                     const container = document.getElementById('container');
-                    container.innerHTML = '';
+                    container.innerHTML = data;
 
-                    const imageElement = document.createElement('img');
-                    imageElement.src = data.image;
-                    imageElement.style.width = '100%';
-                    imageElement.style.opacity = data.opacity;
+                    fetch(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const quoteElement = document.createElement('p');
+                            quoteElement.innerHTML = `"${data.quote}"<br><br>${data.author}`;
 
-                    const quoteElement = document.createElement('p');
-                    quoteElement.innerHTML = `"${data.quote}"<br><br>${data.author}`;
+                            quoteElement.style.fontSize = data.fontSize;
+                            quoteElement.style.fontWeight = 'bold';
+                            quoteElement.style.fontStyle = 'italic';
 
-                    quoteElement.style.fontSize = data.fontSize;
-                    quoteElement.style.fontWeight = 'bold';
-                    quoteElement.style.fontStyle = 'italic';
-
-                    container.appendChild(imageElement);
-                    container.appendChild(quoteElement);
+                            container.appendChild(quoteElement);
+                        })
+                        .catch(error => {
+                            console.log('Error:', error);
+                        });
                 })
                 .catch(error => {
                     console.log('Error:', error);
