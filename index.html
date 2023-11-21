@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Random Image and Quote</title>
     <style>
@@ -8,10 +9,23 @@
         }
 
         #image {
-            max-width: 100%; /* Ajusta el ancho máximo de la imagen según tus necesidades */
-            height: auto; /* Ajusta la altura de la imagen de forma proporcional */
-            display: block; /* Asegura que la imagen esté centrada horizontalmente */
-            margin: 0 auto; /* Centra la imagen horizontalmente en el contenedor */
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 200px;
+            width: 90%;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-style: solid;
+            border-width: 15px;
+            border-top-color: lighten(#000, 20%);
+            border-right-color: lighten(#000, 0%);
+            border-bottom-color: lighten(#000, 20%);
+            border-left-color: lighten(#000, 0%);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
         }
 
         #quote {
@@ -23,9 +37,9 @@
             text-align: center;
             margin-top: 20px;
         }
-
     </style>
 </head>
+
 <body onload="generateRandomImageAndQuote()">
     <div id="container">
         <!-- La imagen y la frase generadas se insertarán aquí -->
@@ -46,30 +60,31 @@
                     query: 'random'
                 }
             })
-            .then(imageResponse => {
-                const container = document.getElementById('container');
-                container.innerHTML = '';
+                .then(imageResponse => {
+                    const container = document.getElementById('container');
+                    container.innerHTML = '';
 
-                const imageElement = document.createElement('img');
-                imageElement.src = imageResponse.data.urls.regular;
-                imageElement.alt = 'Random Image';
-                container.appendChild(imageElement);
+                    const imageElement = document.createElement('img');
+                    imageElement.src = imageResponse.data.urls.regular;
+                    imageElement.alt = 'Random Image';
+                    container.appendChild(imageElement);
 
-                // Obtener frase aleatoria de tu API personalizada
-                axios.get('https://quotes-api-pi.vercel.app/api/randomimage?language=en')
-                    .then(quoteResponse => {
-                        const quoteElement = document.createElement('p');
-                        quoteElement.innerHTML = `"${quoteResponse.data.quote}"<br><br>${quoteResponse.data.author}`;
-                        container.appendChild(quoteElement);
-                    })
-                    .catch(error => {
-                        console.log('Error obteniendo frase:', error);
-                    });
-            })
-            .catch(error => {
-                console.log('Error obteniendo imagen:', error);
-            });
+                    // Obtener frase aleatoria de tu API personalizada
+                    axios.get('https://quotes-api-pi.vercel.app/api/randomimage?language=en')
+                        .then(quoteResponse => {
+                            const quoteElement = document.createElement('p');
+                            quoteElement.innerHTML = `"${quoteResponse.data.quote}"<br><br>${quoteResponse.data.author}`;
+                            container.appendChild(quoteElement);
+                        })
+                        .catch(error => {
+                            console.log('Error obteniendo frase:', error);
+                        });
+                })
+                .catch(error => {
+                    console.log('Error obteniendo imagen:', error);
+                });
         }
     </script>
 </body>
+
 </html>
