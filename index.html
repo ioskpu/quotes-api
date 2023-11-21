@@ -18,7 +18,7 @@
     <script>
         // Función para obtener una frase aleatoria
         function getRandomQuote(language) {
-            var url = 'https://quotes-api-pi.vercel.app/api/randomquote?language=' + language;
+            var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
             $.get(url, function(data) {
                 $('#random-quote').text(data.quote);
             });
