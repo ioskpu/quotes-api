@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mi API</title>
+    <title>Random Quote</title>
     <style>
         /* Agrega tus estilos CSS aquí */
     </style>
 </head>
 <body>
-    <h1>Mi API</h1>
-    <p>Bienvenido a mi API</p>
+    <div id="container">
+        <!-- El contenido generado por la API se insertará aquí -->
+    </div>
+    <button onclick="generateNewQuote()">Generar nueva frase</button>
+
+    <script>
+        function generateNewQuote() {
+            fetch('https://quotes-api-pi.vercel.app/api/randomimage?language=en')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('container');
+                    container.innerHTML = '';
+
+                    const imageElement = document.createElement('img');
+                    imageElement.src = data.image;
+                    imageElement.style.width = '100%';
+                    imageElement.style.opacity = data.opacity;
+
+                    const quoteElement = document.createElement('p');
+                    quoteElement.innerHTML = `"${data.quote}"<br><br>${data.author}`;
+
+                    quoteElement.style.fontSize = data.fontSize;
+                    quoteElement.style.fontWeight = 'bold';
+                    quoteElement.style.fontStyle = 'italic';
+
+                    container.appendChild(imageElement);
+                    container.appendChild(quoteElement);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+
+        // Generar la primera frase al cargar la página
+        generateNewQuote();
+    </script>
 </body>
 </html>
