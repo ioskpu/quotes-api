@@ -8,28 +8,19 @@
             text-align: center;
         }
 
+        #image-container {
+            display: inline-block;
+            border: 2px solid #000;
+            padding: 10px;
+        }
+
         #image {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 200px;
-            width: 90%;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-style: solid;
-            border-width: 15px;
-            border-top-color: lighten(#000, 20%);
-            border-right-color: lighten(#000, 0%);
-            border-bottom-color: lighten(#000, 20%);
-            border-left-color: lighten(#000, 0%);
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
+            max-width: 100%;
+            height: auto;
         }
 
         #quote {
-            font-size: 18px;
+            font-size: 24px;
             margin-top: 20px;
         }
 
@@ -43,7 +34,9 @@
 <body onload="generateRandomImageAndQuote()">
     <div id="container">
         <!-- La imagen y la frase generadas se insertarán aquí -->
-        <img id="image" src="" alt="Random Image">
+        <div id="image-container">
+            <img id="image" src="" alt="Random Image">
+        </div>
         <p id="quote"></p>
     </div>
     <div id="button-container">
