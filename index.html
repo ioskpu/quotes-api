@@ -30,7 +30,7 @@
             $.get(url)
                 .done(function(data) {
                     // Update the image element with the random image
-                    $('#image').attr('src', data.image);
+                    $('#image').html(data);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     console.log('Error fetching random image:', errorThrown);
