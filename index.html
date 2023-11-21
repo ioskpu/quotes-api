@@ -8,13 +8,22 @@
         }
 
         #image {
-            max-width: 200px; /* Ajusta el ancho máximo de la imagen según tus necesidades */
+            max-width: 100%; /* Ajusta el ancho máximo de la imagen según tus necesidades */
+            height: auto; /* Ajusta la altura de la imagen de forma proporcional */
+            display: block; /* Asegura que la imagen esté centrada horizontalmente */
+            margin: 0 auto; /* Centra la imagen horizontalmente en el contenedor */
         }
 
         #quote {
             font-size: 18px;
             margin-top: 20px;
         }
+
+        #button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -23,7 +32,9 @@
         <img id="image" src="" alt="Random Image">
         <p id="quote"></p>
     </div>
-    <button onclick="generateRandomImageAndQuote()">Generar nueva imagen y frase</button>
+    <div id="button-container">
+        <button onclick="generateRandomImageAndQuote()">Generar nueva imagen y frase</button>
+    </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
