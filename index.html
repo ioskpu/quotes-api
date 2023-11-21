@@ -17,29 +17,38 @@
     <button id="new-quote-button">New Quote</button>
 
     <script>
-        // Función para obtener una cita aleatoria
-        function getRandomQuote(language) {
-            var url = 'https://quotes-api-pi.vercel.app/api/randomquote?language=' + language;
-            $.get(url, function(data) {
-                $('#random-quote').text(data.quote);
-                $('#quote-author').text('Author: ' + data.author);
-            });
+        /// Función para obtener una cita aleatoria
+function getRandomQuote(language) {
+    var url = 'https://quotes-api-pi.vercel.app/api/randomquote?language=' + language;
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+            $('#random-quote').text(data.quote);
+            $('#quote-author').text('Author: ' + data.author);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error fetching random quote:', errorThrown);
         }
+    });
+}
 
         // Función para obtener una imagen aleatoria con cita
-        function getRandomImage(language) {
-            var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
-            $.get(url)
-                .done(function(data) {
-                    // Actualizar el elemento de la imagen con la imagen aleatoria
-                    $('#image').html(data);
-                    $('#image-quote').text('Quote: ' + data);
-                })
-                .fail(function(jqXHR, textStatus, errorThrown) {
-                    console.log('Error fetching random image:', errorThrown);
-                });
+function getRandomImage(language) {
+    var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+            // Actualizar el elemento de la imagen con la imagen aleatoria
+            $('#image').attr('src', data.url);
+            $('#image-quote').text('Quote: ' + data.quote);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error fetching random image:', errorThrown);
         }
-
+    });
+}
         // Cargar una cita aleatoria al cargar la página
         getRandomQuote('en');
 
