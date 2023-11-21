@@ -16,27 +16,27 @@
         function generateNewQuote() {
             const language = 'en'; // Idioma deseado
 
-            fetch(`https://random.imagecdn.app/500/150`)
-                .then(response => response.text())
+            fetch(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
+                .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('container');
-                    container.innerHTML = data;
+                    container.innerHTML = '';
 
-                    fetch(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const quoteElement = document.createElement('p');
-                            quoteElement.innerHTML = `"${data.quote}"<br><br>${data.author}`;
+                    const imgElement = document.createElement('img');
+                    imgElement.src = data.image;
+                    imgElement.style.width = '100%';
+                    imgElement.style.opacity = data.opacity;
 
-                            quoteElement.style.fontSize = data.fontSize;
-                            quoteElement.style.fontWeight = 'bold';
-                            quoteElement.style.fontStyle = 'italic';
+                    container.appendChild(imgElement);
 
-                            container.appendChild(quoteElement);
-                        })
-                        .catch(error => {
-                            console.log('Error:', error);
-                        });
+                    const quoteElement = document.createElement('p');
+                    quoteElement.innerHTML = `"${data.quote}"<br><br>${data.author}`;
+
+                    quoteElement.style.fontSize = data.fontSize;
+                    quoteElement.style.fontWeight = 'bold';
+                    quoteElement.style.fontStyle = 'italic';
+
+                    container.appendChild(quoteElement);
                 })
                 .catch(error => {
                     console.log('Error:', error);
