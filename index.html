@@ -3,51 +3,54 @@
 <head>
     <title>Random Quote and Image</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
 </head>
 <body>
     <h1>Random Quote and Image</h1>
     <div id="quote-container">
         <p id="random-quote"></p>
+        <p id="quote-author"></p>
     </div>
     <div id="image-container">
         <img id="image" src="" alt="Random Image">
+        <p id="image-quote"></p>
     </div>
     <button id="new-quote-button">New Quote</button>
 
     <script>
-        // Función para obtener una frase aleatoria
+        // Función para obtener una cita aleatoria
         function getRandomQuote(language) {
             var url = 'https://quotes-api-pi.vercel.app/api/randomquote?language=' + language;
             $.get(url, function(data) {
                 $('#random-quote').text(data.quote);
+                $('#quote-author').text('Author: ' + data.author);
             });
         }
 
-        // Function to get a random image with quote from the API
+        // Función para obtener una imagen aleatoria con cita
         function getRandomImage(language) {
             var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
             $.get(url)
                 .done(function(data) {
-                    // Update the image element with the random image
+                    // Actualizar el elemento de la imagen con la imagen aleatoria
                     $('#image').html(data);
+                    $('#image-quote').text('Quote: ' + data);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     console.log('Error fetching random image:', errorThrown);
                 });
         }
 
-        // Cargar una frase aleatoria al cargar la página
-        getRandomQuote('es');
+        // Cargar una cita aleatoria al cargar la página
+        getRandomQuote('en');
 
-        // Function to handle the click event of the "New Quote" button
+        // Función para manejar el evento de clic del botón "New Quote"
         $('#new-quote-button').click(function() {
-            var language = 'es'; // Reemplaza 'es' con el valor del idioma que desees
+            var language = 'en'; // Reemplaza 'en' con el valor del idioma que desees
             getRandomQuote(language);
             getRandomImage(language);
         });
 
-        // Initial load of a random quote and image
+        // Carga inicial de una cita y una imagen aleatorias
         getRandomQuote();
         getRandomImage();
     </script>
