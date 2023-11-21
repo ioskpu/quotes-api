@@ -1,45 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random Quote and Image</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Random Quote</title>
+    <style>
+        /* Estilos CSS para la imagen y la frase */
+        .quote-container {
+            text-align: center;
+        }
+        .quote-image {
+            width: 100%;
+            opacity: 0.4;
+        }
+        .quote-text {
+            font-size: 40px;
+            font-weight: bold;
+            font-style: italic;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
-    <h1>Random Quote and Image</h1>
-    <div id="image-container">
-        <img id="image" src="" alt="Random Image">
-        <p id="image-quote"></p>
-        <p id="image-author"></p>
+    <div class="quote-container">
+        <img id="quote-image" class="quote-image" src="" alt="Random Image">
+        <p id="quote-text" class="quote-text"></p>
+        <button id="generate-button">Generate New Quote</button>
     </div>
-    <button id="new-quote-button">New Quote</button>
 
     <script>
-        // Función para obtener una imagen aleatoria con cita
-        function getRandomImage(language) {
-            var url = 'https://quotes-api-pi.vercel.app/api/randomimage?language=' + language;
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                success: function(data) {
-                    // Actualizar el elemento de la imagen con la imagen aleatoria
-                    $('#image').attr('src', data.url);
-                    $('#image-quote').text('Quote: ' + data.quote);
-                    $('#image-author').text('Author: ' + data.author);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log('Error fetching random image:', errorThrown);
-                }
-            });
+        // Obtener referencia a los elementos HTML
+        const quoteImageElement = document.getElementById('quote-image');
+        const quoteTextElement = document.getElementById('quote-text');
+        const generateButton = document.getElementById('generate-button');
+
+        // Función para generar una nueva frase
+        function generateNewQuote() {
+            const language = 'es'; // Idioma deseado
+
+            // Realizar solicitud HTTP GET a la API
+            fetch(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualizar la imagen y la frase en el HTML
+                    quoteImageElement.src = data.image;
+                    quoteTextElement.textContent = `"${data.quote}" - ${data.author}`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
-        // Función para manejar el evento de clic del botón "New Quote"
-        $('#new-quote-button').click(function() {
-            var language = 'en'; // Reemplaza 'en' con el valor del idioma que desees
-            getRandomImage(language);
-        });
+        // Agregar evento de clic al botón
+        generateButton.addEventListener('click', generateNewQuote);
 
-        // Carga inicial de una imagen aleatoria con cita
-        getRandomImage('en');
+        // Generar la primera frase al cargar la página
+        generateNewQuote();
     </script>
 </body>
 </html>
