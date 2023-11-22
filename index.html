@@ -20,7 +20,7 @@
 
         #quote {
             font-size: 18px;
-            margin-top: 20px;
+            margin-top: 18px;
             color: rgb(228, 224, 224);
         }
 
@@ -37,9 +37,12 @@
         </div>
         <p id="quote"></p>
     </div>
-    <div id="button-container">
-        <button onclick="generateRandomImageAndQuote()">Generar nueva imagen y frase</button>
-    </div>
+</div>
+<div id="button-container">
+    <button onclick="generateRandomImageAndQuote('en')">Generar nueva frase en inglés</button>
+    <button onclick="generateRandomImageAndQuote('es')">Generar nueva frase en español</button>
+    <button onclick="generateRandomImageAndQuote('it')">Generar nueva frase en italiano</button>
+</div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -77,7 +80,7 @@
                 };
 
                 // Obtener frase aleatoria de tu API personalizada
-                axios.get('https://quotes-api-pi.vercel.app/api/randomimage?language=en')
+                axios.get('https://quotes-api-pi.vercel.app/api/randomimage?language=${language}')
                     .then(quoteResponse => {
                         const quoteElement = document.getElementById('quote');
                         quoteElement.innerHTML = `"${quoteResponse.data.quote}"<br><br>${quoteResponse.data.author}`;
