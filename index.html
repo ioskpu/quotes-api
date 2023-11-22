@@ -52,7 +52,7 @@
             })
             .then(imageResponse => {
                 const imageElement = document.getElementById('image');
-                const imageUrl = imageResponse.data.urls.raw + '&w=400&h=250&dpr=2';
+                const imageUrl = imageResponse.data.urls.raw + '&w=300&h=200&dpr=2';
                 imageElement.src = imageUrl;
 
                 imageElement.onload = function() {
