@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Random Image and Quote</title>
@@ -96,4 +96,103 @@
     </script>
 </body>
 </html>
-
+ -->
+ <!DOCTYPE html>
+ <html>
+ <head>
+     <title>Random Image and Quote</title>
+     <style>
+         #container {
+             text-align: center;
+         }
+ 
+         #image-container {
+             display: inline-block;
+             padding: 10px;
+             background-color: #f1f1f1;
+         }
+ 
+         #image {
+             max-width: 100%;
+             max-height: 100%;
+         }
+ 
+         #quote {
+            font-size: 18px;
+            margin-top: 18px;
+            color: rgb(228, 224, 224);
+         }
+ 
+         #button-container {
+             text-align: center;
+             margin-top: 20px;
+         }
+     </style>
+ </head>
+ <body onload="generateRandomImageAndQuote()">
+     <div id="container">
+         <div id="image-container">
+             <img id="image" src="" alt="Random Image">
+         </div>
+         <p id="quote"></p>
+     </div>
+     <div id="button-container">
+         <button onclick="generateRandomImageAndQuote('en')">Generar nueva frase en inglés</button>
+         <br>
+         <button onclick="generateRandomImageAndQuote('es')">Generar nueva frase en español</button>
+         <br>
+         <button onclick="generateRandomImageAndQuote('it')">Generar nueva frase en italiano</button>
+     </div>
+ 
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <script>
+         function generateRandomImageAndQuote(language) {
+             // Obtener imagen aleatoria de Unsplash
+             axios.get('https://api.unsplash.com/photos/random', {
+                 params: {
+                     client_id: 'XOVivt6Wv--V9C8M83Y-6CjLSjnoLjsg1cRt2zB8HLk', // Reemplaza con tu Access Key de Unsplash
+                     query: 'random'
+                 }
+             })
+             .then(imageResponse => {
+                 const imageElement = document.getElementById('image');
+                 const imageUrl = imageResponse.data.urls.raw + '&w=300&h=200&dpr=2';
+                 imageElement.src = imageUrl;
+ 
+                 imageElement.onload = function() {
+                     const imageContainer = document.getElementById('image-container');
+                     const containerWidth = imageContainer.offsetWidth;
+                     const containerHeight = imageContainer.offsetHeight;
+                     const imageWidth = imageElement.width;
+                     const imageHeight = imageElement.height;
+ 
+                     if (imageWidth > containerWidth || imageHeight > containerHeight) {
+                         const widthRatio = containerWidth / imageWidth;
+                         const heightRatio = containerHeight / imageHeight;
+                         const scaleRatio = Math.min(widthRatio, heightRatio);
+ 
+                         const newWidth = imageWidth * scaleRatio;
+                         const newHeight = imageHeight * scaleRatio;
+ 
+                         imageElement.style.width = newWidth + 'px';
+                         imageElement.style.height = newHeight + 'px';
+                     }
+                 };
+ 
+                 // Obtener frase aleatoria según el idioma seleccionado
+                 axios.get(`https://quotes-api-pi.vercel.app/api/randomimage?language=${language}`)
+                     .then(quoteResponse => {
+                         const quoteElement = document.getElementById('quote');
+                         quoteElement.innerHTML = `"${quoteResponse.data.quote}"<br><br>${quoteResponse.data.author}`;
+                     })
+                     .catch(error => {
+                         console.log('Error obteniendo frase:', error);
+                     });
+             })
+             .catch(error => {
+                 console.log('Error obteniendo imagen:', error);
+             });
+         }
+     </script>
+ </body>
+ </html>
