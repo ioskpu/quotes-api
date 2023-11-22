@@ -127,9 +127,15 @@
              text-align: center;
              margin-top: 20px;
          }
+
+         .quote-button {
+            margin: 5px;
+        }
+
+
      </style>
  </head>
- <body onload="generateRandomImageAndQuote()">
+ <body onload="generateRandomImageAndQuote('es')">
      <div id="container">
          <div id="image-container">
              <img id="image" src="" alt="Random Image">
@@ -137,12 +143,10 @@
          <p id="quote"></p>
      </div>
      <div id="button-container">
-         <button onclick="generateRandomImageAndQuote('en')">Generar nueva frase en inglés</button>
-         <br>
-         <button onclick="generateRandomImageAndQuote('es')">Generar nueva frase en español</button>
-         <br>
-         <button onclick="generateRandomImageAndQuote('it')">Generar nueva frase en italiano</button>
-     </div>
+        <button class="quote-button" onclick="generateRandomImageAndQuote('en')">Generar nueva frase en inglés</button>
+        <button class="quote-button" onclick="generateRandomImageAndQuote('es')">Generar nueva frase en español</button>
+        <button class="quote-button" onclick="generateRandomImageAndQuote('it')">Generar nueva frase en italiano</button>
+    </div>
  
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
      <script>
