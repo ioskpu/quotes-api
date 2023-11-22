@@ -52,7 +52,8 @@
             })
             .then(imageResponse => {
                 const imageElement = document.getElementById('image');
-                imageElement.src = imageResponse.data.urls.regular;
+                const imageUrl = imageResponse.data.urls.raw + '&w=1500&dpr=2';
+                imageElement.src = imageUrl;
 
                 imageElement.onload = function() {
                     const imageContainer = document.getElementById('image-container');
@@ -91,3 +92,4 @@
     </script>
 </body>
 </html>
+
